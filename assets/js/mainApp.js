@@ -6,11 +6,31 @@ let currentUser = JSON.parse(localStorage.getItem("currentUser")) || {};
 
 
 // Call Elements
+const lists = document.querySelector(".lists");
 const allCategory = document.querySelector(".all-category");
+const category = document.querySelectorAll(".category");
+const menu = document.querySelector(".menu");
+const close = document.querySelector(".close");
 
 // Called Element
 whoLogIn(currentUser)
 showCategories(CATEGORIES,allCategory)
+
+menu.addEventListener("click", () => {
+    lists.style.display = "flex"
+    allCategory.style.transform = "translateX(0)"
+})
+close.addEventListener("click", () => {
+    lists.style.display = "none"
+    allCategory.style.transform = "translateX(111%)"
+})
+
+category.forEach((e) => {
+    e.addEventListener("click",{
+        
+    })
+})
+
 
 /**
  * Loop To Show all Category Il Header List
