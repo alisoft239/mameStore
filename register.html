@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/assets/css/all.min.css">
+    <link rel="stylesheet" href="/assets/css/auth.css">
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  />
+    <title>إنشاء حساب</title>
+</head>
+<body>
+
+<div class="container">
+  <!-- Left Card -->
+  <div class="card">
+    <h2>إنشاء حساب جديد</h2>
+    <p class="subtitle">اختر نوع الحساب وأدخل بياناتك</p>
+
+    <!-- Account Type -->
+    <div class="role-switch">
+      <button class="active" data-role="customer">عميل</button>
+      <button data-role="merchant">تاجر</button>
+    </div>
+
+    <form id="registerForm">
+
+      <!-- Customer Fields -->
+      <div class="form-group customer-field">
+        <i class="fa fa-user"></i>
+        <input type="text" id="username" placeholder="اسم المستخدم" />
+        <small></small>
+      </div>
+
+      <!-- Merchant Fields -->
+      <div class="form-group merchant-field hidden">
+        <i class="fa fa-store"></i>
+        <input type="text" id="storeName" placeholder="اسم المتجر" />
+        <small></small>
+      </div>
+
+      <div class="form-group merchant-field hidden">
+        <i class="fa fa-location-dot"></i>
+        <input type="text" id="address" placeholder="العنوان" />
+        <small></small>
+      </div>
+
+      <div class="options merchant-field hidden">
+        <label><input type="checkbox" id="installment" /> متاح التقسيط</label>
+        <label><input type="checkbox" id="shipping" /> متاح الشحن</label>
+      </div>
+
+      <!-- Common Fields -->
+      <div class="form-group">
+        <i class="fa fa-envelope"></i>
+        <input type="email" id="email" placeholder="البريد الإلكتروني" class="emailInput" />
+        <small></small>
+      </div>
+
+      <div class="form-group">
+        <i class="fa fa-lock"></i>
+        <input type="password" id="password" placeholder="كلمة المرور" class="passInput" />
+        <small></small>
+      </div>
+
+      <button type="submit" class="submit-btn">إنشاء الحساب</button>
+
+      <p class="login-link">
+        لديك حساب بالفعل؟ <a href="login.html">تسجيل الدخول</a>
+      </p>
+    </form>
+  </div>
+
+  <!-- Right Visual -->
+  <div class="visual"></div>
+</div>
+
+    <script src="assets/js/auth.js" ></script>
+</body>
+</html>

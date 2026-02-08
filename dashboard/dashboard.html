@@ -1,0 +1,519 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard | إدارة المنتجات</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/all.min.css">
+    <link rel="stylesheet" href="./css/dashboard.css" />
+  </head>
+  <body>
+    <div class="dashboard">
+      <!-- Start Sidebar -->
+      <aside class="sidebar" role="navigation" aria-label="القائمة الرئيسية">
+        <div class="sidebar__header">
+          <!-- Title Page -->
+          <div class="brand">
+            <div class="brand__icon">
+              <i class="fa-solid fa-layer-group"></i>
+            </div>
+            <div class="brand__text">
+              <h1>لوحة التحكم</h1>
+              <span>نظام إدارة المنتجات</span>
+            </div>
+          </div>
+          
+        </div>
+        <!-- Start Navigation Bar -->
+        <nav class="nav">
+          <ul class="nav__list">
+            <li class="nav__item">
+              <a
+                href="#"
+                class="nav__link nav__link--active"
+                data-page="products"
+                aria-current="page"
+              >
+                <span class="nav__icon"
+                  ><i class="fa-solid fa-boxes-stacked"></i
+                ></span>
+                <span class="nav__text">المنتجات</span>
+                <span class="nav__badge" id="navProductCount">0</span>
+              </a>
+            </li>
+            <li class="nav__item">
+              <a href="#" class="nav__link" data-page="add">
+                <span class="nav__icon"
+                  ><i class="fa-solid fa-plus-circle"></i
+                ></span>
+                <span class="nav__text">إضافة منتج</span>
+              </a>
+            </li>
+            <li class="nav__item">
+              <a href="#" class="nav__link" data-page="settings">
+                <span class="nav__icon"><i class="fa-solid fa-gear"></i></span>
+                <span class="nav__text">الإعدادات</span>
+              </a>
+            </li>
+          </ul>
+          <!-- Start user Profile -->
+          <div class="Profile">
+            <div class="user_icon">
+              <i class="fa-solid fa-user"></i>
+            </div>
+            <div class="profile_title">
+              <h3 class="user_name">Ali Ayman</h3>
+              <span class="merchant">تاجر</span>
+            </div>
+          </div>
+          <!-- End user Profile -->
+        </nav>
+        <!-- End Navigation Bar -->         
+        <!-- Start Sidebat Footer -->
+        <div class="sidebar__footer">
+          <div class="storageInfo">
+            <i class="fa-solid fa-database"></i>
+            <span>يتم الحفظ تلقائياً</span>
+          </div>
+        </div>
+        <!-- End Sidebat Footer -->
+      </aside>
+      <!-- End Sidebar -->
+      <!-- Mobile Menu Overlay -->
+      <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+
+      <!-- Start Main Content -->
+      <main class="main">
+        <!-- Start Header -->
+        <header class="header">
+          <div class="header__content">
+            <h2 class="header__title" id="pageTitle">المنتجات</h2>
+            <p class="header__subtitle">إدارة ومراقبة المنتجات في المخزون</p>
+          </div>
+          <!-- Start Action Boutom And menu -->
+          <div class="header__actions">
+            <!-- Menu Button -->
+            <button
+              class="btn btn--ghost btn--icon mobile-menu-toggle"
+              id="mobileMenuToggle"
+              aria-label="فتح القائمة"
+              aria-expanded="false"
+              aria-controls="mobileMenuOverlay"
+            >
+              <i class="fa-solid fa-bars"></i>
+            </button>
+            <!-- Create Button -->
+            <button class="btn btn--primary" id="openCreateBtn">
+              <i class="fa-solid fa-plus"></i>
+              <span>منتج جديد</span>
+            </button>
+          </div>
+          <!-- End Action Boutom And menu -->
+        </header>
+        <!-- End Header -->
+        <!-- Start Content Area -->
+        <div class="content">
+          <!-- Stats stats Cards -->
+          <div class="stats">
+            <div class="statCard">
+              <div class="statCard__icon statCard__icon--primary">
+                <i class="fa-solid fa-box"></i>
+              </div>
+              <div class="statCard__info">
+                <span class="statCard__value" id="totalProducts">0</span>
+                <span class="statCard__label">إجمالي المنتجات</span>
+              </div>
+            </div>
+            <div class="statCard">
+              <div class="statCard__icon statCard__icon--warning">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+              </div>
+              <div class="statCard__info">
+                <span class="statCard__value" id="lowStockProducts">0</span>
+                <span class="statCard__label">مخزون منخفض</span>
+              </div>
+            </div>
+            <div class="statCard">
+              <div class="statCard__icon statCard__icon--success">
+                <i class="fa-solid fa-tags"></i>
+              </div>
+              <div class="statCard__info">
+                <span class="statCard__value" id="totalCategories">6</span>
+                <span class="statCard__label">الأنواع المتاحة</span>
+              </div>
+            </div>
+          </div>
+          <!-- End stats Cards -->
+          <!-- Start Products Table Card -->
+          <!-- Table Title -->
+          <div class="card">
+            <div class="card__header">
+              <div class="card__title">
+                <i class="fa-solid fa-list"></i>
+                <h3>قائمة المنتجات</h3>
+              </div>
+              <div class="card__meta">
+                <span class="badge badge--info" id="productsCount">0 منتج</span>
+              </div>
+            </div>
+            <!-- Table -->
+            <div class="tableContainer">
+              <table class="table" role="table" aria-label="جدول المنتجات">
+                <thead class="table__head">
+                  <tr>
+                    <th scope="col">المنتج</th>
+                    <th scope="col">النوع</th>
+                    <th scope="col">الماركة</th>
+                    <th scope="col">السعر بعد الخصم</th>
+                    <th scope="col">الكمية</th>
+                    <th scope="col" class="table__actions">إجراءات</th>
+                  </tr>
+                </thead>
+                <tbody class="table__body" id="productsTableBody">
+                  <!-- Rows rendered dynamically -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Start Empty State -->
+            <div class="emptyState .is-hidden" id="emptyState" hidden>
+              <div class="emptyState__icon">
+                <i class="fa-solid fa-box-open"></i>
+              </div>
+              <h3 class="emptyState__title">لا توجد منتجات حالياً</h3>
+              <p class="emptyState__text">ابدأ بإضافة منتج جديد إلى نظامك</p>
+              <button class="btn btn--primary" id="emptyAddBtn">
+                <i class="fa-solid fa-plus"></i>
+                <span>إضافة أول منتج</span>
+              </button>
+            </div>
+            <!-- End Empty State -->
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Product Modal -->
+    <div
+      class="modal"
+      id="productModal"
+      aria-hidden="true"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div class="modal__backdrop" data-close="true"></div>
+      <div class="modal__content">
+        <div class="modal__header">
+          <div class="modal__titleWrapper">
+            <div class="modal__icon">
+              <i class="fa-solid fa-box"></i>
+            </div>
+            <div>
+              <h3 class="modal__title" id="modalTitle">إضافة منتج جديد</h3>
+              <p class="modal__subtitle" id="modalSubtitle">
+                أدخل تفاصيل المنتج أدناه
+              </p>
+            </div>
+          </div>
+          <button
+            class="modal__close"
+            id="closeModalBtn"
+            aria-label="إغلاق النافذة"
+          >
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <form class="form" id="productForm" novalidate>
+          <input type="hidden" id="productId" name="id" />
+
+          <div class="form__grid">
+            <!-- Basic Info -->
+            <div class="form__section">
+              <h4 class="form__sectionTitle">المعلومات الأساسية</h4>
+
+              <div class="form__field">
+                <label for="name" class="form__label">
+                  اسم المنتج
+                  <span class="form__required">*</span>
+                </label>
+                <div class="form__inputWrapper">
+                  <i class="fa-solid fa-tag form__inputIcon"></i>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    class="form__input"
+                    placeholder="مثال: iPhone 15 Pro"
+                    required
+                  />
+                </div>
+                <span class="form__error" id="nameError"></span>
+              </div>
+
+              <div class="form__field">
+                <label for="shortDescription" class="form__label">
+                  الوصف المختصر
+                  <span class="form__required">*</span>
+                </label>
+                <div class="form__inputWrapper">
+                  <i class="fa-solid fa-align-right form__inputIcon"></i>
+                  <textarea
+                    id="shortDescription"
+                    name="shortDescription"
+                    class="form__input form__input--textarea"
+                    rows="2"
+                    placeholder="وصف مختصر للمنتج..."
+                    required
+                  ></textarea>
+                </div>
+                <span class="form__error" id="shortDescriptionError"></span>
+              </div>
+
+              <div class="form__row">
+                <div class="form__field form__field--half">
+                  <label for="category" class="form__label">
+                    النوع
+                    <span class="form__required">*</span>
+                  </label>
+                  <div class="form__inputWrapper">
+                    <i class="fa-solid fa-layer-group form__inputIcon"></i>
+                    <select
+                      id="category"
+                      name="category"
+                      class="form__input form__input--select"
+                      required
+                    >
+                      <option value="">اختر النوع</option>
+                      <option value="electronics">إلكترونيات</option>
+                      <option value="phones">تلفونات</option>
+                      <option value="laptops">لابتوبات</option>
+                      <option value="headphones">سماعات</option>
+                      <option value="smartwatches">ساعات ذكية</option>
+                      <option value="accessories">إكسسوارات</option>
+                    </select>
+                    <i class="fa-solid fa-chevron-down form__selectArrow"></i>
+                  </div>
+                  <span class="form__error" id="categoryError"></span>
+                </div>
+
+                <div class="form__field form__field--half">
+                  <label for="brand" class="form__label">
+                    الماركة
+                    <span class="form__required">*</span>
+                  </label>
+                  <div class="form__inputWrapper">
+                    <i class="fa-solid fa-copyright form__inputIcon"></i>
+                    <select
+                      id="brand"
+                      name="brand"
+                      class="form__input form__input--select"
+                      required
+                      disabled
+                    >
+                      <option value="">اختر الماركة</option>
+                    </select>
+                    <i class="fa-solid fa-chevron-down form__selectArrow"></i>
+                  </div>
+                  <span class="form__error" id="brandError"></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pricing -->
+            <div class="form__section">
+              <h4 class="form__sectionTitle">التسعير والكمية</h4>
+
+              <div class="form__row">
+                <div class="form__field form__field--half">
+                  <label for="price" class="form__label">
+                    السعر (EGP)
+                    <span class="form__required">*</span>
+                  </label>
+                  <div class="form__inputWrapper">
+                    <i class="fa-solid fa-money-bill-wave form__inputIcon"></i>
+                    <input
+                      type="number"
+                      id="price"
+                      name="price"
+                      class="form__input"
+                      placeholder="0.00"
+                      min="0"
+                      step="0.01"
+                      required
+                    />
+                  </div>
+                  <span class="form__error" id="priceError"></span>
+                </div>
+
+                <div class="form__field form__field--half">
+                  <label for="discount" class="form__label">
+                    الخصم (%)
+                  </label>
+                  <div class="form__inputWrapper">
+                    <i class="fa-solid fa-percent form__inputIcon"></i>
+                    <input
+                      type="number"
+                      id="discount"
+                      name="discount"
+                      class="form__input"
+                      placeholder="0"
+                      min="0"
+                      max="100"
+                      value="0"
+                    />
+                  </div>
+                  <span class="form__error" id="discountError"></span>
+                </div>
+              </div>
+
+              <div class="form__field">
+                <label for="quantity" class="form__label">
+                  الكمية في المخزون
+                  <span class="form__required">*</span>
+                </label>
+                <div class="form__inputWrapper">
+                  <i class="fa-solid fa-cubes form__inputIcon"></i>
+                  <input
+                    type="number"
+                    id="quantity"
+                    name="quantity"
+                    class="form__input"
+                    placeholder="0"
+                    min="0"
+                    required
+                  />
+                </div>
+                <span class="form__error" id="quantityError"></span>
+              </div>
+            </div>
+
+            <!-- Specifications -->
+            <div class="form__section form__section--full">
+              <h4 class="form__sectionTitle">المواصفات التقنية</h4>
+
+              <div class="form__row">
+                <div class="form__field form__field--third">
+                  <label for="weight" class="form__label">
+                    الوزن
+                    <span class="form__required">*</span>
+                  </label>
+                  <div class="form__inputWrapper">
+                    <i class="fa-solid fa-weight-hanging form__inputIcon"></i>
+                    <input
+                      type="text"
+                      id="weight"
+                      name="weight"
+                      class="form__input"
+                      placeholder="مثال: 180g"
+                      required
+                    />
+                  </div>
+                  <span class="form__error" id="weightError"></span>
+                </div>
+
+                <div class="form__field form__field--third">
+                  <label for="capacity" class="form__label">
+                    السعة
+                    <span class="form__required">*</span>
+                  </label>
+                  <div class="form__inputWrapper">
+                    <i class="fa-solid fa-database form__inputIcon"></i>
+                    <input
+                      type="text"
+                      id="capacity"
+                      name="capacity"
+                      class="form__input"
+                      placeholder="مثال: 256GB"
+                      required
+                    />
+                  </div>
+                  <span class="form__error" id="capacityError"></span>
+                </div>
+
+                <div class="form__field form__field--third">
+                  <label for="ram" class="form__label">
+                    الرام
+                    <span class="form__required">*</span>
+                  </label>
+                  <div class="form__inputWrapper">
+                    <i class="fa-solid fa-memory form__inputIcon"></i>
+                    <input
+                      type="text"
+                      id="ram"
+                      name="ram"
+                      class="form__input"
+                      placeholder="مثال: 8GB"
+                      required
+                    />
+                  </div>
+                  <span class="form__error" id="ramError"></span>
+                </div>
+              </div>
+
+              <div class="form__field">
+                <label for="specifications" class="form__label">
+                  الوصف التقني المفصل
+                  <span class="form__required">*</span>
+                </label>
+                <div class="form__inputWrapper">
+                  <i class="fa-solid fa-list-check form__inputIcon"></i>
+                  <textarea
+                    id="specifications"
+                    name="specifications"
+                    class="form__input form__input--textarea"
+                    rows="3"
+                    placeholder="أدخل المواصفات التقنية الكاملة..."
+                    required
+                  ></textarea>
+                </div>
+                <span class="form__error" id="specificationsError"></span>
+              </div>
+
+              <div class="form__field">
+                <label for="additionalSpecs" class="form__label">
+                  مواصفات إضافية
+                  <span class="form__required">*</span>
+                </label>
+                <div class="form__inputWrapper">
+                  <i class="fa-solid fa-circle-plus form__inputIcon"></i>
+                  <textarea
+                    id="additionalSpecs"
+                    name="additionalSpecs"
+                    class="form__input form__input--textarea"
+                    rows="2"
+                    placeholder="أي مواصفات إضافية..."
+                    required
+                  ></textarea>
+                </div>
+                <span class="form__error" id="additionalSpecsError"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form__actions">
+            <button type="button" class="btn btn--secondary" id="cancelBtn">
+              <i class="fa-solid fa-xmark"></i>
+              <span>إلغاء</span>
+            </button>
+            <button type="submit" class="btn btn--primary" id="submitBtn">
+              <i class="fa-solid fa-check"></i>
+              <span>حفظ المنتج</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script type="module" src="./js/app.js"></script>
+    <!-- <script type="module" src="./js/app.js"></script> -->
+    <script type="module" src="./js/mobile-menu.js"></script>
+  </body>
+</html>

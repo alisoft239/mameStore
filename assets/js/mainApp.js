@@ -1,0 +1,65 @@
+// Import CATEGORIES Data Form data.js
+import {CATEGORIES} from "/dashboard/js/data.js"
+
+// storge
+let currentUser = JSON.parse(localStorage.getItem("currentUser")) || {};
+
+
+// Call Elements
+const allCategory = document.querySelector(".all-category");
+
+// Called Element
+whoLogIn(currentUser)
+showCategories(CATEGORIES,allCategory)
+
+/**
+ * Loop To Show all Category Il Header List
+ * @param {Object} CATEGORIES To Extract Labal and Brands
+ * @param {Element} allCategory To Add Elements To Father Element
+ */
+function showCategories(CATEGORIES,allCategory){
+    for (const key in CATEGORIES) {
+        if (!Object.hasOwn(CATEGORIES, key)) continue;
+            let category = document.createElement("div")
+            category.classList.add("category")
+            let select = document.createElement("span")
+            select.classList.add("select")
+            category.appendChild(select)
+            let i = document.createElement("i")
+            i.classList.add("fa-solid","fa-angle-down")
+            category.appendChild(i)
+            let ul = document.createElement("ul")
+            ul.classList.add("list")
+            category.appendChild(ul)
+            const element = CATEGORIES[key];
+            select.textContent = element.label;
+        for(let i = 0; i < element.brands.length; i++)
+        {
+            let li = document.createElement("li")
+            li.classList.add("option")
+            li.textContent = element.brands[i];
+            ul.appendChild(li)
+        }
+        allCategory.appendChild(category);
+    }
+}
+
+/**
+ * Function To Show User Name Or Login
+ * @param {object} currentUser Take Name User Who Login
+ */
+function whoLogIn(currentUser){
+let logIN = document.querySelector(".user-name") 
+if(Object.keys(currentUser).length === 0){
+    logIN.innerHTML = 'تسجيل الدخول <i class="fa-solid fa-angle-up"></i>';
+    logIN.setAttribute("href",'login.html')
+}else {
+    let username = currentUser.Name;
+    if(username.lingth > 10)
+    {
+        username = username.slice(0,9);
+    }
+    logIN.textContent = username;
+    logIN.setAttribute("href",'#')
+}
+}
