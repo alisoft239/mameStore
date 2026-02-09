@@ -128,9 +128,10 @@ let logIN = document.querySelector(".user-name")
 if(Object.keys(currentUser).length === 0){
     logIN.innerHTML = 'تسجيل الدخول <i class="fa-solid fa-angle-up"></i>';
     logIN.setAttribute("href",'login.html')
+    return
 }else {
     let username = currentUser.Name;
-    if(username.lingth > 10)
+    if(username?.length > 10)
     {
         username = username.slice(0,9);
     }
