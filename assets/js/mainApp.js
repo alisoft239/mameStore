@@ -11,26 +11,81 @@ const allCategory = document.querySelector(".all-category");
 const category = document.querySelectorAll(".category");
 const menu = document.querySelector(".menu");
 const close = document.querySelector(".close");
+let select;
 
 // Called Element
 whoLogIn(currentUser)
 showCategories(CATEGORIES,allCategory)
+showOptions()
+menuSetting()
 
+
+// =================Start Header UI==============
+/**
+ * show options when you click
+ */
+function showOptions() {
+select = document.querySelectorAll(".select")
+
+select.forEach((ele) => {
+    
+    ele.addEventListener("click", () => {
+        select.forEach((e) => {
+            e.style.color = "var(--color-gray-600)"
+            let list = e.nextElementSibling.nextElementSibling ;
+            list.classList.remove("show");
+        }); // شيل من الكل
+        ele.style.color = "var(--color-success)"
+        let list = ele.nextElementSibling.nextElementSibling;
+        list.classList.add("show");
+        menuSetting()
+    });
+});
+}
+/**
+ * when you open or close
+ */
+function menuSetting(){
+    let width;
+setInterval(()=>{
+    width = document.scrollingElement.scrollWidth;
+    widthMobile()
+},100);
+function widthMobile() {
+    
+    if(width > 540)
+    {
+        lists.style.display = "flex"
+            select.forEach((ele) => {
+           ele.style.color = "var(--color-white)"
+              });
+    }else{ 
+        
+        if(menu.classList.contains("active"))
+        {
+            lists.style.display = "flex"
+        }else{
+            lists.style.display = "none"
+        }
+    }
+}
 menu.addEventListener("click", () => {
+    menu.classList.add("active")
+    select.forEach((ele) => {
+    ele.style.color = "var(--color-gray-600)"
+    });
     lists.style.display = "flex"
-    allCategory.style.transform = "translateX(0)"
 })
 close.addEventListener("click", () => {
+    menu.classList.remove("active")
+    select.forEach((ele) => {
+        let list = ele.nextElementSibling.nextElementSibling ;
+        list.classList.remove("show");
+    });
     lists.style.display = "none"
-    allCategory.style.transform = "translateX(111%)"
 })
 
-category.forEach((e) => {
-    e.addEventListener("click",{
-        
-    })
-})
-
+}
 
 /**
  * Loop To Show all Category Il Header List
@@ -83,3 +138,4 @@ if(Object.keys(currentUser).length === 0){
     logIN.setAttribute("href",'#')
 }
 }
+// =================Start Header UI==============
