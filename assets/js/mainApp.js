@@ -86,7 +86,6 @@ close.addEventListener("click", () => {
 })
 
 }
-
 /**
  * Loop To Show all Category Il Header List
  * @param {Object} CATEGORIES To Extract Labal and Brands
@@ -118,7 +117,6 @@ function showCategories(CATEGORIES,allCategory){
         allCategory.appendChild(category);
     }
 }
-
 /**
  * Function To Show User Name Or Login
  * @param {object} currentUser Take Name User Who Login
@@ -139,4 +137,79 @@ if(Object.keys(currentUser).length === 0){
     logIN.setAttribute("href",'#')
 }
 }
-// =================Start Header UI==============
+// =================End Header UI==============
+// =================Start Sleader UI==============
+// Get elements
+const slides = document.querySelectorAll('.slide');
+const dots = document.querySelectorAll('.dot');
+const nextBtn = document.querySelector('.next');
+const prevBtn = document.querySelector('.prev');
+
+let currentIndex = 0;
+let autoSlide;
+
+// Show slide by index
+function showSlide(index) {
+  slides.forEach(slide => slide.classList.remove('active'));
+  dots.forEach((dot) => {
+    dot.classList.remove('active')
+    dot.style.width = "7px";
+  });
+
+  slides[index].classList.add('active');
+  dots[index].classList.add('active');
+  dots[index].style.width = "26px";
+
+  currentIndex = index;
+}
+
+// Next slide
+function nextSlide() {
+  let index = currentIndex + 1;
+  if (index >= slides.length) index = 0;
+  showSlide(index);
+}
+
+// Previous slide
+function prevSlide() {
+  let index = currentIndex - 1;
+  if (index < 0) index = slides.length - 1;
+  showSlide(index);
+}
+
+// Auto slide
+function startAutoSlide() {
+  autoSlide = setInterval(nextSlide, 10000);
+}
+
+// Stop auto slide
+function stopAutoSlide() {
+  clearInterval(autoSlide);
+}
+
+// Events
+nextBtn.addEventListener('click', () => {
+  nextSlide();
+  stopAutoSlide();
+  startAutoSlide();
+});
+
+prevBtn.addEventListener('click', () => {
+  prevSlide();
+  stopAutoSlide();
+  startAutoSlide();
+});
+
+dots.forEach(dot => {
+  dot.addEventListener('click', () => {
+    showSlide(+dot.dataset.index);
+    stopAutoSlide();
+    startAutoSlide();
+  });
+});
+
+// Init
+startAutoSlide();
+
+// =================End Sleader UI==============
+
