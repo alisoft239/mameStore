@@ -147,7 +147,6 @@ const prevBtn = document.querySelector('.prev');
 
 let currentIndex = 0;
 let autoSlide;
-
 // Show slide by index
 function showSlide(index) {
   slides.forEach(slide => slide.classList.remove('active'));
@@ -162,44 +161,37 @@ function showSlide(index) {
 
   currentIndex = index;
 }
-
 // Next slide
 function nextSlide() {
   let index = currentIndex + 1;
   if (index >= slides.length) index = 0;
   showSlide(index);
 }
-
 // Previous slide
 function prevSlide() {
   let index = currentIndex - 1;
   if (index < 0) index = slides.length - 1;
   showSlide(index);
 }
-
 // Auto slide
 function startAutoSlide() {
   autoSlide = setInterval(nextSlide, 10000);
 }
-
 // Stop auto slide
 function stopAutoSlide() {
   clearInterval(autoSlide);
 }
-
 // Events
 nextBtn.addEventListener('click', () => {
   nextSlide();
   stopAutoSlide();
   startAutoSlide();
 });
-
 prevBtn.addEventListener('click', () => {
   prevSlide();
   stopAutoSlide();
   startAutoSlide();
 });
-
 dots.forEach(dot => {
   dot.addEventListener('click', () => {
     showSlide(+dot.dataset.index);
@@ -207,7 +199,6 @@ dots.forEach(dot => {
     startAutoSlide();
   });
 });
-
 // Init
 startAutoSlide();
 
