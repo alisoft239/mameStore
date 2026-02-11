@@ -77,7 +77,7 @@
 .header {
     display: flex;
     align-items: center;
-    padding: 20px 0;
+    padding: 30px 0;
     gap: 0 40px;
 }
 .header .menu {
@@ -170,6 +170,7 @@
     gap: 5px 0;
 }
 .actions .item .title {
+    font-size: 13px;
     color: var(--color-gray-300);
     font-weight: 300;
 }
@@ -189,6 +190,7 @@
 }
 .all-category {
     display: flex;
+    padding: 0 40px;
 }
 .all-category .close,
 .all-category .all,
@@ -198,14 +200,14 @@
 
 .all-category .category {
     color: var(--color-white);
-    padding: 10px 10px;
+    padding: 12px 10px;
     font-weight: 300;
     width: fit-content;
     cursor: default;
     position: relative;
 }
 .all-category .category i {
-    font-size: 12px;
+    font-size: 8px;
     margin-inline-start: 5px;
 }
 .all-category .category .list {

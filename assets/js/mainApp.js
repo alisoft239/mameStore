@@ -200,7 +200,8 @@ dots.forEach(dot => {
   });
 });
 // Init
-startAutoSlide();
+window.onload = startAutoSlide();
+
 
 // =================End Sleader UI==============
 
