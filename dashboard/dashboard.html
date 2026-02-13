@@ -10,7 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./css/all.min.css">
+    <link rel="stylesheet" href="./css/all.min.css" />
     <link rel="stylesheet" href="./css/dashboard.css" />
   </head>
   <body>
@@ -28,7 +28,6 @@
               <span>نظام إدارة المنتجات</span>
             </div>
           </div>
-          
         </div>
         <!-- Start Navigation Bar -->
         <nav class="nav">
@@ -74,7 +73,7 @@
           </div>
           <!-- End user Profile -->
         </nav>
-        <!-- End Navigation Bar -->         
+        <!-- End Navigation Bar -->
         <!-- Start Sidebat Footer -->
         <div class="sidebar__footer">
           <div class="storageInfo">
@@ -353,9 +352,7 @@
                 </div>
 
                 <div class="form__field form__field--half">
-                  <label for="discount" class="form__label">
-                    الخصم (%)
-                  </label>
+                  <label for="discount" class="form__label"> الخصم (%) </label>
                   <div class="form__inputWrapper">
                     <i class="fa-solid fa-percent form__inputIcon"></i>
                     <input
@@ -493,6 +490,64 @@
                   ></textarea>
                 </div>
                 <span class="form__error" id="additionalSpecsError"></span>
+              </div>
+            </div>
+
+            <!-- Images -->
+            <div class="form__section form__section--full">
+              <h4 class="form__sectionTitle">صور المنتج</h4>
+
+              <div class="form__field">
+                <label for="image1" class="form__label">
+                  رابط الصورة الأولى
+                  <span class="form__required">*</span>
+                </label>
+                <div class="form__inputWrapper">
+                  <i class="fa-solid fa-image form__inputIcon"></i>
+                  <input
+                    type="url"
+                    id="image1"
+                    name="image1"
+                    class="form__input"
+                    placeholder="https://example.com/image1.jpg"
+                    required
+                  />
+                </div>
+                <span class="form__error" id="image1Error"></span>
+              </div>
+
+              <div class="form__field">
+                <label for="image2" class="form__label">
+                  رابط الصورة الثانية
+                </label>
+                <div class="form__inputWrapper">
+                  <i class="fa-solid fa-image form__inputIcon"></i>
+                  <input
+                    type="url"
+                    id="image2"
+                    name="image2"
+                    class="form__input"
+                    placeholder="https://example.com/image2.jpg"
+                  />
+                </div>
+                <span class="form__error" id="image2Error"></span>
+              </div>
+
+              <div class="form__field">
+                <label for="image3" class="form__label">
+                  رابط الصورة الثالثة
+                </label>
+                <div class="form__inputWrapper">
+                  <i class="fa-solid fa-image form__inputIcon"></i>
+                  <input
+                    type="url"
+                    id="image3"
+                    name="image3"
+                    class="form__input"
+                    placeholder="https://example.com/image3.jpg"
+                  />
+                </div>
+                <span class="form__error" id="image3Error"></span>
               </div>
             </div>
           </div>

@@ -3,7 +3,7 @@
  * @module App
  */
 
-import { loadProducts, saveProducts, generateId } from './storage.js';
+import { loadProducts, saveProducts, generateId } from "./storage.js";
 import {
   renderProductsList,
   openModal,
@@ -15,8 +15,8 @@ import {
   showNotification,
   setActiveNav,
   setupCategoryListener,
-  initializeElements
-} from './ui.js';
+  initializeElements,
+} from "./ui.js";
 
 /**
  * Application state
@@ -27,7 +27,7 @@ import {
  */
 const state = {
   productsByUser: {},
-  currentView: 'products'
+  currentView: "products",
 };
 
 // ================= USER =================
@@ -42,17 +42,31 @@ if (!userId) {
 document.querySelector(".user_name").textContent = user.storeName;
 // ================= VALIDATION =================
 const VALIDATION_RULES = {
-  name: { required: true, minLength: 2, message: 'اسم المنتج مطلوب' },
-  quantity: { required: true, min: 0, integer: true, message: 'الكمية غير صحيحة' },
-  shortDescription: { required: true, minLength: 5, message: 'الوصف المختصر مطلوب' },
-  category: { required: true, message: 'اختر النوع' },
-  brand: { required: true, message: 'اختر الماركة' },
-  price: { required: true, min: 0.01, message: 'السعر غير صحيح' },
-  specifications: { required: true, minLength: 10, message: 'المواصفات مطلوبة' },
-  weight: { required: true, message: 'الوزن مطلوب' },
-  capacity: { required: true, message: 'السعة مطلوبة' },
-  ram: { required: true, message: 'الرام مطلوبة' },
-  additionalSpecs: { required: true, message: 'المواصفات الإضافية مطلوبة' }
+  name: { required: true, minLength: 2, message: "اسم المنتج مطلوب" },
+  quantity: {
+    required: true,
+    min: 0,
+    integer: true,
+    message: "الكمية غير صحيحة",
+  },
+  shortDescription: {
+    required: true,
+    minLength: 5,
+    message: "الوصف المختصر مطلوب",
+  },
+  category: { required: true, message: "اختر النوع" },
+  brand: { required: true, message: "اختر الماركة" },
+  price: { required: true, min: 0.01, message: "السعر غير صحيح" },
+  specifications: {
+    required: true,
+    minLength: 10,
+    message: "المواصفات مطلوبة",
+  },
+  weight: { required: true, message: "الوزن مطلوب" },
+  capacity: { required: true, message: "السعة مطلوبة" },
+  ram: { required: true, message: "الرام مطلوبة" },
+  additionalSpecs: { required: true, message: "المواصفات الإضافية مطلوبة" },
+  image1: { required: true, message: "رابط الصورة الأولى مطلوب" },
 };
 
 const validateProduct = (data) => {
@@ -76,6 +90,15 @@ const validateProduct = (data) => {
     if (rule.min !== undefined && Number(value) < rule.min) {
       errors[field] = rule.message;
     }
+
+    // URL validation for image fields
+    if (field.startsWith("image") && value && value.trim()) {
+      try {
+        new URL(value.trim());
+      } catch {
+        errors[field] = "يرجى إدخال رابط صحيح";
+      }
+    }
   });
 
   return Object.keys(errors).length ? errors : null;
@@ -90,7 +113,7 @@ const handleFormSubmit = (e) => {
 
   if (errors) {
     showValidationErrors(errors);
-    showNotification('يرجى تصحيح الأخطاء', 'error');
+    showNotification("يرجى تصحيح الأخطاء", "error");
     return;
   }
 
@@ -101,13 +124,13 @@ const handleFormSubmit = (e) => {
     id: formData.id || generateId(),
     ownerId: userId,
     createdAt: isEdit ? formData.createdAt : Date.now(),
-    updatedAt: Date.now()
+    updatedAt: Date.now(),
   };
 
   const userProducts = state.productsByUser[userId];
 
   if (isEdit) {
-    const index = userProducts.findIndex(p => p.id === product.id);
+    const index = userProducts.findIndex((p) => p.id === product.id);
     if (index !== -1) userProducts[index] = product;
   } else {
     userProducts.unshift(product);
@@ -120,8 +143,8 @@ const handleFormSubmit = (e) => {
   clearValidationErrors();
 
   showNotification(
-    isEdit ? 'تم تحديث المنتج بنجاح' : 'تم إضافة المنتج بنجاح',
-    'success'
+    isEdit ? "تم تحديث المنتج بنجاح" : "تم إضافة المنتج بنجاح",
+    "success",
   );
 };
 
@@ -130,22 +153,22 @@ const handleDeleteProduct = (productId) => {
   const confirmed = confirm("هل أنت متأكد من حذف المنتج؟");
   if (!confirmed) return;
 
-  state.productsByUser[userId] =
-    state.productsByUser[userId].filter(p => p.id !== productId);
+  state.productsByUser[userId] = state.productsByUser[userId].filter(
+    (p) => p.id !== productId,
+  );
 
   saveProducts(state.productsByUser);
   renderProductsList(state.productsByUser[userId]);
 
-  showNotification('تم حذف المنتج', 'success');
+  showNotification("تم حذف المنتج", "success");
 };
 
 // ================= EDIT =================
 const handleEditProduct = (productId) => {
-  const product = state.productsByUser[userId]
-    .find(p => p.id === productId);
+  const product = state.productsByUser[userId].find((p) => p.id === productId);
 
   if (!product) return;
-  openModal('edit', product);
+  openModal("edit", product);
 };
 
 // ================= CATEGORY =================
@@ -155,26 +178,31 @@ const handleCategoryChange = (categoryId) => {
 
 // ================= EVENTS =================
 const setupEventListeners = () => {
-  document.getElementById('productsTableBody')?.addEventListener('click', (e) => {
-    const btn = e.target.closest('[data-action]');
-    if (!btn) return;
+  document
+    .getElementById("productsTableBody")
+    ?.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-action]");
+      if (!btn) return;
 
-    const { action, id } = btn.dataset;
+      const { action, id } = btn.dataset;
 
-    if (action === 'edit') handleEditProduct(id);
-    if (action === 'delete') handleDeleteProduct(id);
-  });
+      if (action === "edit") handleEditProduct(id);
+      if (action === "delete") handleDeleteProduct(id);
+    });
 
-  document.getElementById('productForm')
-    ?.addEventListener('submit', handleFormSubmit);
+  document
+    .getElementById("productForm")
+    ?.addEventListener("submit", handleFormSubmit);
 
   setupCategoryListener(handleCategoryChange);
 
-  document.getElementById('openCreateBtn')
-    ?.addEventListener('click', () => openModal('create'));
+  document
+    .getElementById("openCreateBtn")
+    ?.addEventListener("click", () => openModal("create"));
 
-  document.getElementById('closeModalBtn')
-    ?.addEventListener('click', closeModal);
+  document
+    .getElementById("closeModalBtn")
+    ?.addEventListener("click", closeModal);
 };
 
 // ================= INIT =================
@@ -188,13 +216,13 @@ const init = () => {
 
   initializeElements();
   renderProductsList(state.productsByUser[userId]);
-  setActiveNav('products');
+  setActiveNav("products");
 
   setupEventListeners();
 
   console.log("✅ Dashboard Ready");
 };
 
-document.readyState === 'loading'
-  ? document.addEventListener('DOMContentLoaded', init)
+document.readyState === "loading"
+  ? document.addEventListener("DOMContentLoaded", init)
   : init();

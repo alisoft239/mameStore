@@ -20,6 +20,8 @@
     --color-success: #008c56;
     --color-danger-primary: #F55157;
     --color-BG: #1D1f1F;
+
+    --main-border-radus: 6px;
 }
 
 /* Stert Container Style */
@@ -606,4 +608,71 @@
     }
 }
 /* End Mobile Responsife */
+/* Start spshiol catgory */
+.spshiol_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.spshiol_header .spshiol_title {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.spshiol_header .spshiol_title .h3 {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--color-gray-600);
+}
+.spshiol_header .spshiol_title .desc {
+color: var(--color-gray-400);
+    font-size: 14px;
+}
+.spshiol_header .viwe-all {
+    border: 1px solid var(--color-primary);
+    color:var(--color-primary);
+    font-size: 14px;
+    padding: 10px 17px;
+    cursor: pointer;
+}
+.spshiol_header .viwe-all:hover {
+    border: transparent;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+/* End spshiol catgory */
+/* Start ads one */
+.ads-bg {
+    width: 100%;
+    background-image: url(/assets/image/lap-bg.png);
+    margin-bottom: 50px;
+}
+.ads-bg .ads-content {
+    display: flex;
+    align-items: center;
+    padding: 60px 0;
+}
+.ads-bg .ads-content .ads-title {
+    color: var(--color-white);
+    max-width: 400px;
+}
+.ads-bg .ads-content .ads-title h2{
+    font-size: 40px;
+}
+.ads-bg .ads-content .ads-title p{
+    font-size: 15px;
+    margin: 20px 0;
+    font-weight: 100;
+}
+.ads-bg .ads-content .ads-title button{
+      padding: 12px 46px;
+  border: none;
+  background: var(--color-primary);
+  color: var(--color-white);
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+    font-weight: 100;
+}
 
+/* End ads one */

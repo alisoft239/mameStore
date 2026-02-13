@@ -4,7 +4,11 @@
  * @module UI
  */
 
-import { getCategoryLabel, getCategoryIcon, getCategoryBrands } from './data.js';
+import {
+  getCategoryLabel,
+  getCategoryIcon,
+  getCategoryBrands,
+} from "./data.js";
 
 // DOM Element References (initialized once)
 const elements = {
@@ -18,7 +22,7 @@ const elements = {
   brandSelect: null,
   categorySelect: null,
   navLinks: null,
-  pageTitle: null
+  pageTitle: null,
 };
 
 /**
@@ -26,17 +30,17 @@ const elements = {
  * Call once at application startup
  */
 export const initializeElements = () => {
-  elements.productsTableBody = document.getElementById('productsTableBody');
-  elements.productsCount = document.getElementById('productsCount');
-  elements.emptyState = document.getElementById('emptyState');
-  elements.modal = document.getElementById('productModal');
-  elements.modalTitle = document.getElementById('modalTitle');
-  elements.modalSubtitle = document.getElementById('modalSubtitle');
-  elements.productForm = document.getElementById('productForm');
-  elements.brandSelect = document.getElementById('brand');
-  elements.categorySelect = document.getElementById('category');
-  elements.navLinks = document.querySelectorAll('.nav__link');
-  elements.pageTitle = document.getElementById('pageTitle');
+  elements.productsTableBody = document.getElementById("productsTableBody");
+  elements.productsCount = document.getElementById("productsCount");
+  elements.emptyState = document.getElementById("emptyState");
+  elements.modal = document.getElementById("productModal");
+  elements.modalTitle = document.getElementById("modalTitle");
+  elements.modalSubtitle = document.getElementById("modalSubtitle");
+  elements.productForm = document.getElementById("productForm");
+  elements.brandSelect = document.getElementById("brand");
+  elements.categorySelect = document.getElementById("category");
+  elements.navLinks = document.querySelectorAll(".nav__link");
+  elements.pageTitle = document.getElementById("pageTitle");
 };
 
 /**
@@ -46,11 +50,11 @@ export const initializeElements = () => {
  */
 
 const formatCurrency = (value) => {
-  if (!Number.isFinite(value)) return '—';
-  return new Intl.NumberFormat('ar-EG', {
-    style: 'currency',
-    currency: 'EGP',
-    maximumFractionDigits: 2
+  if (!Number.isFinite(value)) return "—";
+  return new Intl.NumberFormat("ar-EG", {
+    style: "currency",
+    currency: "EGP",
+    maximumFractionDigits: 2,
   }).format(value);
 };
 
@@ -71,7 +75,7 @@ const calculateFinalPrice = (price, discount) => {
  * @returns {string} Escaped HTML
  */
 const escapeHtml = (text) => {
-  const div = document.createElement('div');
+  const div = document.createElement("div");
   div.textContent = text;
   return div.innerHTML;
 };
@@ -82,14 +86,15 @@ const escapeHtml = (text) => {
  * @returns {HTMLTableRowElement} Table row element
  */
 const createProductRow = (product) => {
-  const row = document.createElement('tr');
-  row.className = 'table__row';
+  const row = document.createElement("tr");
+  row.className = "table__row";
   row.dataset.productId = product.id;
 
   const finalPrice = calculateFinalPrice(product.price, product.discount);
-  const discountBadge = product.discount > 0 
-    ? `<span class="badge badge--discount">-${product.discount}%</span>` 
-    : '';
+  const discountBadge =
+    product.discount > 0
+      ? `<span class="badge badge--discount">-${product.discount}%</span>`
+      : "";
 
   row.innerHTML = `
     <td class="table__cell table__cell--product">
@@ -110,12 +115,12 @@ const createProductRow = (product) => {
     <td class="table__cell table__cell--price">
       <div class="priceCell">
         <span class="priceCell__final">${formatCurrency(finalPrice)}</span>
-        ${product.discount > 0 ? `<span class="priceCell__original">${formatCurrency(product.price)}</span>` : ''}
+        ${product.discount > 0 ? `<span class="priceCell__original">${formatCurrency(product.price)}</span>` : ""}
       </div>
       ${discountBadge}
     </td>
     <td class="table__cell">
-      <span class="quantity ${product.quantity < 10 ? 'quantity--low' : ''}">${product.quantity}</span>
+      <span class="quantity ${product.quantity < 10 ? "quantity--low" : ""}">${product.quantity}</span>
     </td>
     <td class="table__cell table__cell--actions">
       <div class="actionButtons">
@@ -143,31 +148,31 @@ export const renderProductsList = (products) => {
   if (elements.productsCount) {
     elements.productsCount.textContent = `${products.length} منتج`;
   }
-console.log(products.length);
-console.log(elements.emptyState);
+  console.log(products.length);
+  console.log(elements.emptyState);
 
   // Show/hide empty state
   // if (elements.emptyState) {
   //   elements.emptyState.hidden = products.length > 0;
   // }
-    // Empty state logic (FIXED)
+  // Empty state logic (FIXED)
   if (elements.emptyState) {
     if (products.length === 0) {
-      elements.emptyState.classList.remove('is-hidden');
+      elements.emptyState.classList.remove("is-hidden");
     } else {
-      elements.emptyState.classList.add('is-hidden');
+      elements.emptyState.classList.add("is-hidden");
     }
   }
 
   // Clear table (efficiently)
-  elements.productsTableBody.innerHTML = '';
+  elements.productsTableBody.innerHTML = "";
 
   if (products.length === 0) return;
 
   // صندوق لاضافة كل شيء مرة واحدة
   // Use DocumentFragment for single DOM insertion
   const fragment = document.createDocumentFragment();
-  products.forEach(product => {
+  products.forEach((product) => {
     fragment.appendChild(createProductRow(product));
   });
   elements.productsTableBody.appendChild(fragment);
@@ -178,15 +183,15 @@ console.log(elements.emptyState);
  * @param {string} categoryId - Selected category ID
  * @param {string} selectedBrand - Currently selected brand (for edit mode)
  */
-export const updateBrandOptions = (categoryId, selectedBrand = '') => {
+export const updateBrandOptions = (categoryId, selectedBrand = "") => {
   if (!elements.brandSelect) return;
 
   const brands = getCategoryBrands(categoryId);
-  
+
   elements.brandSelect.innerHTML = '<option value="">اختر الماركة</option>';
-  
-  brands.forEach(brand => {
-    const option = document.createElement('option');
+
+  brands.forEach((brand) => {
+    const option = document.createElement("option");
     option.value = brand;
     option.textContent = brand;
     if (brand === selectedBrand) {
@@ -206,13 +211,13 @@ export const updateBrandOptions = (categoryId, selectedBrand = '') => {
 export const openModal = (mode, product = null) => {
   if (!elements.modal || !elements.productForm) return;
 
-  const isEdit = mode === 'edit' && product;
+  const isEdit = mode === "edit" && product;
 
   // Set modal content
-  elements.modalTitle.textContent = isEdit ? 'تعديل منتج' : 'إضافة منتج';
-  elements.modalSubtitle.textContent = isEdit 
-    ? 'عدّل البيانات ثم اضغط حفظ التغييرات'
-    : 'املأ كل الحقول المطلوبة ثم اضغط إضافة';
+  elements.modalTitle.textContent = isEdit ? "تعديل منتج" : "إضافة منتج";
+  elements.modalSubtitle.textContent = isEdit
+    ? "عدّل البيانات ثم اضغط حفظ التغييرات"
+    : "املأ كل الحقول المطلوبة ثم اضغط إضافة";
 
   // Reset or fill form
   elements.productForm.reset();
@@ -221,18 +226,20 @@ export const openModal = (mode, product = null) => {
   if (isEdit && product) {
     fillFormWithProduct(product);
   } else {
-    elements.productForm.productId.value = '';
-    updateBrandOptions('');
+    elements.productForm.productId.value = "";
+    updateBrandOptions("");
   }
 
   // Show modal
-  elements.modal.classList.add('is-open');
-  elements.modal.setAttribute('aria-hidden', 'false');
-  document.body.style.overflow = 'hidden';
+  elements.modal.classList.add("is-open");
+  elements.modal.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
 
   // Focus first input
   setTimeout(() => {
-    const firstInput = elements.productForm.querySelector('input:not([type="hidden"])');
+    const firstInput = elements.productForm.querySelector(
+      'input:not([type="hidden"])',
+    );
     if (firstInput) firstInput.focus();
   }, 100);
 };
@@ -242,10 +249,10 @@ export const openModal = (mode, product = null) => {
  */
 export const closeModal = () => {
   if (!elements.modal) return;
-  
-  elements.modal.classList.remove('is-open');
-  elements.modal.setAttribute('aria-hidden', 'true');
-  document.body.style.overflow = '';
+
+  elements.modal.classList.remove("is-open");
+  elements.modal.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
 };
 
 /**
@@ -269,6 +276,12 @@ const fillFormWithProduct = (product) => {
   form.ram.value = product.ram;
   form.additionalSpecs.value = product.additionalSpecs;
 
+  // Handle images array
+  const images = product.images || [];
+  form.image1.value = images[0] || "";
+  form.image2.value = images[1] || "";
+  form.image3.value = images[2] || "";
+
   // Update brands and set value
   updateBrandOptions(product.category, product.brand);
 };
@@ -280,6 +293,13 @@ const fillFormWithProduct = (product) => {
 export const getFormData = () => {
   const form = elements.productForm;
   if (!form) return null;
+
+  // Collect image links into an array
+  const images = [
+    form.image1.value.trim(),
+    form.image2.value.trim(),
+    form.image3.value.trim(),
+  ].filter((url) => url !== ""); // Remove empty strings
 
   return {
     id: form.productId.value,
@@ -294,7 +314,12 @@ export const getFormData = () => {
     weight: form.weight.value.trim(),
     capacity: form.capacity.value.trim(),
     ram: form.ram.value.trim(),
-    additionalSpecs: form.additionalSpecs.value.trim()
+    additionalSpecs: form.additionalSpecs.value.trim(),
+    // Include individual image fields for validation
+    image1: form.image1.value.trim(),
+    image2: form.image2.value.trim(),
+    image3: form.image3.value.trim(),
+    images: images, // Store images as array
   };
 };
 
@@ -304,14 +329,14 @@ export const getFormData = () => {
  */
 export const showValidationErrors = (errors) => {
   clearValidationErrors();
-  
+
   Object.entries(errors).forEach(([fieldName, message]) => {
     const field = document.querySelector(`[name="${fieldName}"]`);
     const errorEl = document.getElementById(`${fieldName}Error`);
-    
+
     if (field) {
-      field.classList.add('is-invalid');
-      field.setAttribute('aria-invalid', 'true');
+      field.classList.add("is-invalid");
+      field.setAttribute("aria-invalid", "true");
     }
     if (errorEl) {
       errorEl.textContent = message;
@@ -323,14 +348,14 @@ export const showValidationErrors = (errors) => {
  * Clear all validation errors
  */
 export const clearValidationErrors = () => {
-  const invalidFields = document.querySelectorAll('.is-invalid');
-  invalidFields.forEach(field => {
-    field.classList.remove('is-invalid');
-    field.removeAttribute('aria-invalid');
+  const invalidFields = document.querySelectorAll(".is-invalid");
+  invalidFields.forEach((field) => {
+    field.classList.remove("is-invalid");
+    field.removeAttribute("aria-invalid");
   });
 
-  const errorMessages = document.querySelectorAll('.form__error');
-  errorMessages.forEach(el => el.textContent = '');
+  const errorMessages = document.querySelectorAll(".form__error");
+  errorMessages.forEach((el) => (el.textContent = ""));
 };
 
 /**
@@ -338,30 +363,34 @@ export const clearValidationErrors = () => {
  * @param {string} message - Message to display
  * @param {string} type - 'success' | 'error' | 'info'
  */
-export const showNotification = (message, type = 'success') => {
-  const toast = document.createElement('div');
+export const showNotification = (message, type = "success") => {
+  const toast = document.createElement("div");
   toast.className = `toast toast--${type}`;
-  toast.setAttribute('role', 'alert');
-  toast.setAttribute('aria-live', 'polite');
-  
-  const icon = type === 'success' ? 'fa-check-circle' : 
-               type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle';
-  
+  toast.setAttribute("role", "alert");
+  toast.setAttribute("aria-live", "polite");
+
+  const icon =
+    type === "success"
+      ? "fa-check-circle"
+      : type === "error"
+        ? "fa-exclamation-circle"
+        : "fa-info-circle";
+
   toast.innerHTML = `
     <i class="fa-solid ${icon}"></i>
     <span>${message}</span>
   `;
-  
+
   document.body.appendChild(toast);
-  
+
   // Trigger animation
   requestAnimationFrame(() => {
-    toast.classList.add('toast--visible');
+    toast.classList.add("toast--visible");
   });
-  
+
   // Remove after delay
   setTimeout(() => {
-    toast.classList.remove('toast--visible');
+    toast.classList.remove("toast--visible");
     setTimeout(() => document.body.removeChild(toast), 300);
   }, 3000);
 };
@@ -371,19 +400,19 @@ export const showNotification = (message, type = 'success') => {
  * @param {string} pageId - Current page ID
  */
 export const setActiveNav = (pageId) => {
-  elements.navLinks?.forEach(link => {
+  elements.navLinks?.forEach((link) => {
     const isActive = link.dataset.page === pageId;
-    link.classList.toggle('nav__link--active', isActive);
-    link.setAttribute('aria-current', isActive ? 'page' : 'false');
+    link.classList.toggle("nav__link--active", isActive);
+    link.setAttribute("aria-current", isActive ? "page" : "false");
   });
 
   if (elements.pageTitle) {
     const titles = {
-      products: 'المنتجات',
-      add: 'إضافة منتج',
-      settings: 'الإعدادات'
+      products: "المنتجات",
+      add: "إضافة منتج",
+      settings: "الإعدادات",
     };
-    elements.pageTitle.textContent = titles[pageId] || 'المنتجات';
+    elements.pageTitle.textContent = titles[pageId] || "المنتجات";
   }
 };
 
@@ -392,7 +421,7 @@ export const setActiveNav = (pageId) => {
  * @param {Function} onCategoryChange - Callback when category changes
  */
 export const setupCategoryListener = (onCategoryChange) => {
-  elements.categorySelect?.addEventListener('change', (e) => {
+  elements.categorySelect?.addEventListener("change", (e) => {
     onCategoryChange(e.target.value);
   });
 };

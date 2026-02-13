@@ -51,6 +51,7 @@ export const CATEGORIES = {
     brands: ['Anker', 'Baseus', 'UGREEN', 'Generic', 'Belkin']
   }
 };
+
 // الحقول التقنية
 export const SPECIFICATIONS_FIELDS = [
   { id: 'weight', label: 'الوزن', placeholder: '180g', icon: 'fa-weight-hanging' },

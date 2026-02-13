@@ -4,7 +4,6 @@ import {CATEGORIES} from "/dashboard/js/data.js"
 // storge
 let currentUser = JSON.parse(localStorage.getItem("currentUser")) || {};
 
-
 // Call Elements
 const lists = document.querySelector(".lists");
 const allCategory = document.querySelector(".all-category");
